@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
           create: (_)=>AuthService(),
         ),
       ],
-      child:MaterialApp(
-        home: presciptionDetails(),
+      child:const MaterialApp(
+        home: Wrapper(),
         debugShowCheckedModeBanner: false,
       ),
     );

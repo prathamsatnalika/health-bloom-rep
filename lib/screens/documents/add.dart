@@ -1,5 +1,9 @@
+
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:health_bloom_test_ui/screens/auth-services.dart';
@@ -8,6 +12,7 @@ import 'package:health_bloom_test_ui/screens/documents/recent_docs.dart';
 import 'package:health_bloom_test_ui/screens/HomePage/constants.dart';
 import 'package:health_bloom_test_ui/screens/HomePage/drawer.dart';
 import 'package:health_bloom_test_ui/screens/json/create_budget_json.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +28,68 @@ class _CreatBudgetPageState extends State<CreatBudgetPage> {
   final TextEditingController _userAilmentsController = TextEditingController();
   final TextEditingController _drAdviceController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  File? _image ;
+  final imagePicker = ImagePicker();
+  String _imageLink = '';
+
+
+  Future imagePickerMethod() async {
+    final pic = await imagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pic != null) {
+        _image = File(pic.path);
+      }
+    });
+  }
+
+  void uploadImage() {
+    String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final Reference storageReference = FirebaseStorage.instance.ref()
+        .child('Images').child(imageFileName);
+    final UploadTask uploadTask = storageReference.putFile(_image!);
+
+    uploadTask.then((TaskSnapshot taskSnapshot){
+      taskSnapshot.ref.getDownloadURL().then((imageUrl){
+        setState(() {
+          _imageLink = imageUrl;
+        });
+        print(_imageLink);
+        savePrescription();
+      });
+    }).catchError((error){
+
+    });
+  }
+
+  void savePrescription() {
+    final useremail = FirebaseAuth.instance.currentUser!.email;
+    print("$useremail");
+    Map<String,dynamic> data = {
+      'dr_name': _drnameController.text,
+      'hospital_name': _hospitalNameController.text,
+      'user_ailment;': _userAilmentsController.text,
+      'dr_advice': _drnameController.text,
+      'description': _descriptionController.text,
+      'time_saved' : "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
+      'type'   : "prescription",
+      'img'  : 'https://assets9.lottiefiles.com/packages/lf20_vPnn3K.json',
+      'prescription_img' : _imageLink,
+
+    };
+    CollectionReference collectionReference = FirebaseFirestore.instance.collection('$useremail saves');
+    collectionReference.add(data)
+        .then((value) => {
+      Fluttertoast.showToast(
+        msg: "Saved Prescription",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.blue,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      ),
+    });
+  }
 
   DateTime selectedDate = DateTime.now();
 
@@ -296,37 +363,15 @@ class _CreatBudgetPageState extends State<CreatBudgetPage> {
                                                   children: [
 
                                                     RaisedButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        imagePickerMethod();
+                                                      },
                                                       child: Text("Select Img"),
                                                     ),
                                                     SizedBox(width: 15,),
                                                     RaisedButton(
                                                         onPressed: ()  {
-                                                          final useremail = FirebaseAuth.instance.currentUser!.email;
-                                                          print("$useremail");
-                                                          Map<String,dynamic> data = {
-                                                            'dr_name': _drnameController.text,
-                                                              'hospital_name': _hospitalNameController.text,
-                                                              'user_ailment;': _userAilmentsController.text,
-                                                              'dr_advice': _drnameController.text,
-                                                              'description': _descriptionController.text,
-                                                              'time_saved' : "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
-                                                                  'type'   : "prescription",
-                                                                  'img'  : 'https://assets9.lottiefiles.com/packages/lf20_vPnn3K.json'
-                                                          };
-                                                          CollectionReference collectionReference = FirebaseFirestore.instance.collection('$useremail saves');
-                                                          collectionReference.add(data)
-                                                              .then((value) => {
-                                                            Fluttertoast.showToast(
-                                                              msg: "Saved Prescription",
-                                                              toastLength: Toast.LENGTH_LONG,
-                                                              gravity: ToastGravity.BOTTOM,
-                                                              backgroundColor: Colors.blue,
-                                                              textColor: Colors.white,
-                                                              fontSize: 16.0,
-                                                            ),
-                                                          });
-
+                                                          uploadImage();
                                                         },
                                                         child: Text("Submit"))
                                                   ],

@@ -59,7 +59,7 @@ class _AllPrecriptionsState extends State<AllPrecriptions> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              document['Doctor_Name'],
+                              document['dr_name'],
                               style: TextStyle(
 
                                   fontWeight: FontWeight.bold,
@@ -78,7 +78,7 @@ class _AllPrecriptionsState extends State<AllPrecriptions> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Text(document['Doctor_Name'],
+                                Text(document['dr_name'],
                                     style: TextStyle(
                                          fontSize: 13, letterSpacing: .3)),
                               ],

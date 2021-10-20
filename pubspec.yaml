@@ -30,6 +30,8 @@ dependencies:
     sdk: flutter
   #splashscreen:
   lottie: ^1.0.1
+  firebase_storage:
+  expansion_tile_card:
   material_design_icons_flutter:
   google_fonts:
   curved_navigation_bar:
