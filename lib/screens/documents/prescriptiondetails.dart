@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 class presciptionDetails extends StatefulWidget {
 
-  const presciptionDetails({Key? key,doc ? doc}) : super(key: key);
+  const presciptionDetails({Key? key}) : super(key: key);
 
   @override
   _presciptionDetailsState createState() => _presciptionDetailsState();
 }
-
-
 
 class _presciptionDetailsState extends State<presciptionDetails> {
   @override
@@ -98,11 +96,12 @@ class _presciptionDetailsState extends State<presciptionDetails> {
                 ),
               ),
 
-              decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.all(new Radius.circular(30.0))),
+              decoration: BoxDecoration(
+                  borderRadius:  BorderRadius.all(Radius.circular(30.0))),
               width: 300,
               height: 70,
             ),
+            
             Container(
               child: const TextField(
                 autofocus: false,
@@ -117,8 +116,8 @@ class _presciptionDetailsState extends State<presciptionDetails> {
                 ),
               ),
 
-              decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.all(new Radius.circular(30.0))),
+              decoration:  const BoxDecoration(
+                  borderRadius:  BorderRadius.all( Radius.circular(30.0))),
               width: 300,
               height: 70,
             ),
