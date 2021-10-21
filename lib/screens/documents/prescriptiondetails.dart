@@ -1,14 +1,17 @@
+
 import 'package:flutter/material.dart';
 
-class presciptionDetails extends StatefulWidget {
+class PresciptionDetails extends StatefulWidget {
 
-  const presciptionDetails({Key? key}) : super(key: key);
+  final document;
+
+  const PresciptionDetails({Key? key,this.document}) : super(key: key);
 
   @override
-  _presciptionDetailsState createState() => _presciptionDetailsState();
+  _PresciptionDetailsState createState() => _PresciptionDetailsState();
 }
 
-class _presciptionDetailsState extends State<presciptionDetails> {
+class _PresciptionDetailsState extends State<PresciptionDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +27,10 @@ class _presciptionDetailsState extends State<presciptionDetails> {
               height: 30,
             ),
             Container(
-                child: const TextField(
+                child:  TextField(
+                  controller: TextEditingController()..text = widget.document["dr_name"],
                   autofocus: false,
-                  style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
+                  style: TextStyle(fontSize: 15.0, color: Colors.black),
                   decoration: InputDecoration(
                     hintStyle: TextStyle(
 
@@ -44,28 +48,10 @@ class _presciptionDetailsState extends State<presciptionDetails> {
             ),
 
             Container(
-              child: const TextField(
+              child:  TextField(
+                controller: TextEditingController()..text = widget.document["description"],
                 autofocus: false,
-                style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
-                decoration: InputDecoration(
-                  hintStyle: TextStyle(
-
-                  ),
-                  hintText: 'Details',
-                  contentPadding: EdgeInsets.only(
-                      left: 14.0, bottom: 12.0, top: 0.0),
-                ),
-              ),
-
-              decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.all(new Radius.circular(30.0))),
-              width: 300,
-              height: 70,
-            ),
-            Container(
-              child: const TextField(
-                autofocus: false,
-                style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
+                style: TextStyle(fontSize: 15.0, color: Colors.black),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
 
@@ -81,16 +67,38 @@ class _presciptionDetailsState extends State<presciptionDetails> {
               width: 300,
               height: 70,
             ),
-
             Container(
-              child: const TextField(
+              child:  TextField(
+                controller: TextEditingController()..text = widget.document["hospital_name"],
                 autofocus: false,
-                style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
+                style: TextStyle(fontSize: 15.0, color: Colors.black),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
 
                   ),
-                  hintText: 'Type',
+                  hintText: 'Hospital Name',
+                  contentPadding: EdgeInsets.only(
+                      left: 14.0, bottom: 12.0, top: 0.0),
+                ),
+              ),
+
+              decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(30.0))),
+              width: 300,
+              height: 70,
+            ),
+
+            Container(
+              child:  TextField(
+                controller: TextEditingController()..text = widget.document["user_ailment"],
+
+                autofocus: false,
+                style: TextStyle(fontSize: 15.0, color: Colors.black),
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+
+                  ),
+                  hintText: 'User Ailments',
                   contentPadding: EdgeInsets.only(
                       left: 14.0, bottom: 12.0, top: 0.0),
                 ),
@@ -103,14 +111,16 @@ class _presciptionDetailsState extends State<presciptionDetails> {
             ),
             
             Container(
-              child: const TextField(
+              child:  TextField(
+                controller: TextEditingController()..text = widget.document["dr_advice"],
+
                 autofocus: false,
-                style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
+                style: TextStyle(fontSize: 15.0, color: Colors.black),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
 
                   ),
-                  hintText: 'Patient Aliment',
+                  hintText: 'Dr Advice',
                   contentPadding: EdgeInsets.only(
                       left: 14.0, bottom: 12.0, top: 0.0),
                 ),

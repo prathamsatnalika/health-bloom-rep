@@ -68,7 +68,7 @@ class _CreatBudgetPageState extends State<CreatBudgetPage> {
     Map<String,dynamic> data = {
       'dr_name': _drnameController.text,
       'hospital_name': _hospitalNameController.text,
-      'user_ailment;': _userAilmentsController.text,
+      'user_ailment': _userAilmentsController.text,
       'dr_advice': _drnameController.text,
       'description': _descriptionController.text,
       'time_saved' : "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
@@ -183,7 +183,8 @@ class _CreatBudgetPageState extends State<CreatBudgetPage> {
                                   alignment: Alignment.topCenter,
                                   children: [
                                     Container(
-                                        height: 350,
+                                        height: MediaQuery.of(context).size.height * 0.8,
+                                        width: MediaQuery.of(context).size.width * 0.9,
                                         child: SingleChildScrollView(
                                           child: Padding(
                                               padding:

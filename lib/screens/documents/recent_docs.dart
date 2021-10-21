@@ -32,11 +32,12 @@ class _RecentDocsState extends State<RecentDocs> {
 
           return ListView(
               children: snapshot.data!.docs.map((document) {
-                print(document.toString());
                 return SingleChildScrollView(
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>presciptionDetails(doc: document)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PresciptionDetails(
+                        document: document
+                      )));
                     },
                     child: Container(
                       decoration: BoxDecoration(
